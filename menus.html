@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Menus — North House</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,700;0,800;1,300;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap');
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+  :root { --alpine:#2E4636; --oat:#F0EBE0; --ember:#B56B3A; --charcoal:#22211F; --stone:#8A8778; }
+  html { scroll-behavior:smooth; }
+  body { background:var(--oat); color:var(--charcoal); font-family:'Cormorant Garamond',Georgia,serif; overflow-x:hidden; }
+  nav { position:fixed; top:0; left:0; right:0; z-index:100; display:flex; flex-direction:column; align-items:center; padding:14px 48px 10px; gap:8px; background:rgba(240,235,224,0.96); backdrop-filter:blur(8px); border-bottom:0.5px solid rgba(34,33,31,0.1); }
+  .nav-logo { display:flex; flex-direction:column; align-items:center; gap:3px; text-decoration:none; }
+  .nav-logo svg { width:34px; height:34px; display:block; }
+  .nav-wordmark { font-family:'Spectral',Georgia,serif; font-weight:800; font-size:9px; letter-spacing:0.3em; color:var(--charcoal); text-transform:uppercase; white-space:nowrap; }
+  .nav-bottom { display:flex; align-items:center; justify-content:center; }
+  .nav-links { display:flex; align-items:center; gap:32px; list-style:none; }
+  .nav-links a { font-family:'Spectral',Georgia,serif; font-size:9px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:var(--charcoal); text-decoration:none; opacity:0.65; transition:opacity 0.2s; white-space:nowrap; }
+  .nav-links a:hover, .nav-links a.active { opacity:1; }
+  .nav-divider { width:1px; height:14px; background:rgba(34,33,31,0.2); margin:0 28px; }
+  .nav-cta { font-family:'Spectral',Georgia,serif; font-size:8px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:var(--oat); background:var(--alpine); padding:7px 16px; text-decoration:none; white-space:nowrap; transition:background 0.2s; }
+  .nav-cta:hover { background:var(--charcoal); }
+  .page-header { margin-top:96px; padding:72px 72px 48px; text-align:center; }
+  .page-header-tag { font-family:'Spectral',Georgia,serif; font-size:10px; font-weight:700; letter-spacing:0.55em; text-transform:uppercase; color:var(--ember); margin-bottom:16px; }
+  .page-header h1 { font-family:'Spectral',Georgia,serif; font-weight:300; font-size:clamp(36px,5vw,64px); line-height:1.15; color:var(--charcoal); margin-bottom:16px; }
+  .page-header h1 em { font-style:italic; color:var(--alpine); }
+  .page-header p { font-size:17px; line-height:1.8; color:var(--stone); max-width:560px; margin:16px auto 0; }
+  .section-label { display:flex; align-items:center; gap:20px; padding:0 72px 40px; }
+  .section-label-line { flex:1; height:0.5px; background:rgba(34,33,31,0.15); }
+  .section-label h3 { font-family:'Spectral',Georgia,serif; font-size:10px; font-weight:700; letter-spacing:0.55em; text-transform:uppercase; color:var(--stone); white-space:nowrap; }
+  .gallery { padding:0 72px 80px; display:grid; grid-template-columns:repeat(3,1fr); gap:24px; border-bottom:0.5px solid rgba(34,33,31,0.12); }
+  .menu-card-wrap { display:flex; flex-direction:column; gap:12px; }
+  .menu-card-wrap svg { width:100%; border-radius:2px; box-shadow:0 8px 40px rgba(34,33,31,0.12); transition:transform 0.3s, box-shadow 0.3s; cursor:pointer; }
+  .menu-card-wrap svg:hover { transform:translateY(-6px); box-shadow:0 20px 56px rgba(34,33,31,0.2); }
+  .menu-card-label { font-family:'Spectral',Georgia,serif; font-size:10px; font-weight:700; letter-spacing:0.35em; text-transform:uppercase; color:var(--stone); text-align:center; }
+  .menu-card-sublabel { font-family:'Cormorant Garamond',Georgia,serif; font-size:13px; font-style:italic; color:var(--stone); text-align:center; opacity:0.7; }
+  /* PHOTO STRIP between menu cards and seasonal */
+  .photo-strip { display:grid; grid-template-columns:repeat(4,1fr); gap:3px; height:340px; }
+  .photo-strip img { width:100%; height:100%; object-fit:cover; display:block; transition:transform 0.6s; }
+  .photo-strip div { overflow:hidden; }
+  .photo-strip div:hover img { transform:scale(1.05); }
+  .seasonal-section { padding-top:72px; }
+  .seasonal-header { text-align:center; padding:0 72px 48px; }
+  .seasonal-header-tag { font-family:'Spectral',Georgia,serif; font-size:10px; font-weight:700; letter-spacing:0.55em; text-transform:uppercase; color:var(--ember); margin-bottom:16px; }
+  .seasonal-header h2 { font-family:'Spectral',Georgia,serif; font-weight:300; font-size:clamp(28px,3.5vw,44px); color:var(--charcoal); }
+  .seasonal-header h2 em { font-style:italic; color:var(--alpine); }
+  .season-tabs { display:flex; justify-content:center; border-bottom:0.5px solid rgba(34,33,31,0.12); }
+  .season-tab { font-family:'Spectral',Georgia,serif; font-size:10px; font-weight:700; letter-spacing:0.35em; text-transform:uppercase; padding:22px 40px; border:none; background:transparent; color:var(--stone); cursor:pointer; border-bottom:2px solid transparent; margin-bottom:-0.5px; transition:all 0.2s; }
+  .season-tab:hover { color:var(--charcoal); }
+  .season-tab.active { color:var(--charcoal); border-bottom-color:var(--ember); }
+  .menu-body { display:none; }
+  .menu-body.active { display:block; }
+  .menu-header { padding:72px 72px 56px; display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:end; border-bottom:0.5px solid rgba(34,33,31,0.1); }
+  .menu-header-left { display:flex; flex-direction:column; gap:16px; }
+  .menu-season-tag { font-family:'Spectral',Georgia,serif; font-size:10px; font-weight:700; letter-spacing:0.5em; text-transform:uppercase; color:var(--ember); }
+  .menu-header-left h2 { font-family:'Spectral',Georgia,serif; font-weight:300; font-size:clamp(32px,4vw,56px); line-height:1.2; color:var(--charcoal); }
+  .menu-header-left h2 em { font-style:italic; color:var(--alpine); }
+  .menu-header-left p { font-size:17px; line-height:1.8; color:var(--stone); max-width:440px; }
+  .menu-header-right { display:flex; flex-direction:column; gap:12px; }
+  .menu-meta { display:flex; flex-direction:column; gap:6px; }
+  .menu-meta-label { font-family:'Spectral',Georgia,serif; font-size:9px; font-weight:700; letter-spacing:0.4em; text-transform:uppercase; color:var(--stone); }
+  .menu-meta-value { font-family:'Spectral',Georgia,serif; font-size:14px; color:var(--charcoal); }
+  .menu-note { font-family:'Cormorant Garamond',Georgia,serif; font-size:14px; font-style:italic; color:var(--stone); line-height:1.6; border-left:2px solid var(--ember); padding-left:16px; margin-top:8px; }
+  .courses { padding:0 72px 80px; max-width:900px; }
+  .course { padding:48px 0; border-bottom:0.5px solid rgba(34,33,31,0.08); display:grid; grid-template-columns:140px 1fr; gap:40px; align-items:start; }
+  .course:last-child { border-bottom:none; }
+  .course-num { display:flex; flex-direction:column; gap:4px; padding-top:6px; }
+  .course-label { font-family:'Spectral',Georgia,serif; font-size:9px; font-weight:700; letter-spacing:0.45em; text-transform:uppercase; color:var(--ember); }
+  .course-count { font-family:'Spectral',Georgia,serif; font-weight:300; font-size:40px; line-height:1; color:rgba(34,33,31,0.12); }
+  .course-content { display:flex; flex-direction:column; gap:8px; }
+  .course-name { font-family:'Spectral',Georgia,serif; font-weight:700; font-size:22px; color:var(--charcoal); }
+  .course-sub { font-family:'Cormorant Garamond',Georgia,serif; font-size:15px; font-style:italic; color:var(--stone); line-height:1.5; }
+  .course-desc { font-family:'Cormorant Garamond',Georgia,serif; font-size:16px; line-height:1.75; color:var(--stone); max-width:520px; margin-top:4px; }
+  .dietary { padding:48px 72px; background:var(--alpine); display:flex; align-items:center; justify-content:space-between; gap:40px; }
+  .dietary-text { display:flex; flex-direction:column; gap:8px; }
+  .dietary-label { font-family:'Spectral',Georgia,serif; font-size:10px; font-weight:700; letter-spacing:0.4em; text-transform:uppercase; color:rgba(240,235,224,0.45); }
+  .dietary-text p { font-family:'Cormorant Garamond',Georgia,serif; font-size:17px; line-height:1.7; color:rgba(240,235,224,0.75); max-width:580px; }
+  .dietary-btn { font-family:'Spectral',Georgia,serif; font-size:9px; font-weight:700; letter-spacing:0.25em; text-transform:uppercase; color:var(--oat); background:transparent; border:1px solid rgba(240,235,224,0.35); padding:12px 24px; text-decoration:none; white-space:nowrap; transition:all 0.2s; flex-shrink:0; }
+  .dietary-btn:hover { background:rgba(240,235,224,0.1); }
+  footer { padding:48px; display:flex; align-items:center; justify-content:space-between; background:var(--charcoal); }
+  .footer-left { font-family:'Spectral',Georgia,serif; font-size:10px; font-weight:700; letter-spacing:0.3em; color:rgba(240,235,224,0.35); text-transform:uppercase; }
+  .footer-centre { display:flex; flex-direction:column; align-items:center; gap:6px; }
+  .footer-name { font-family:'Spectral',Georgia,serif; font-weight:800; font-size:11px; letter-spacing:0.3em; color:rgba(240,235,224,0.7); }
+  .footer-sub { font-family:'Spectral',Georgia,serif; font-size:10px; font-style:italic; color:var(--ember); letter-spacing:0.15em; }
+  .footer-right { font-family:'Spectral',Georgia,serif; font-size:10px; color:rgba(240,235,224,0.3); letter-spacing:0.1em; }
+</style>
+</head>
+<body>
+<nav>
+  <a class="nav-logo" href="index.html">
+    <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="200" cy="200" r="200" fill="transparent"/>
+      <g transform="translate(200,200)">
+        <polygon points="0,-120 14,-24 0,-54 -14,-24" fill="#2E4636"/>
+        <polygon points="0,120 14,24 0,54 -14,24" fill="#2E4636"/>
+        <polygon points="-120,0 -24,14 -54,0 -24,-14" fill="#2E4636"/>
+        <polygon points="120,0 24,14 54,0 24,-14" fill="#2E4636"/>
+        <polygon points="-78,-78 -16,-22 -34,-34 -22,-16" fill="#8A8778" opacity="0.55"/>
+        <polygon points="78,-78 16,-22 34,-34 22,-16" fill="#8A8778" opacity="0.55"/>
+        <polygon points="-78,78 -16,22 -34,34 -22,16" fill="#8A8778" opacity="0.55"/>
+        <polygon points="78,78 16,22 34,34 22,16" fill="#8A8778" opacity="0.55"/>
+        <circle cx="0" cy="0" r="26" fill="#F0EBE0"/>
+        <circle cx="0" cy="0" r="18" fill="#22211F"/>
+        <circle cx="0" cy="0" r="11" fill="#B56B3A"/>
+        <text font-family="Georgia,serif" font-weight="700" font-size="32px" fill="#2E4636" x="0" y="-134" text-anchor="middle">N</text>
+        <text font-family="Georgia,serif" font-weight="700" font-size="32px" fill="#2E4636" x="0" y="164" text-anchor="middle">H</text>
+      </g>
+    </svg>
+    <div class="nav-wordmark">North House</div>
+  </a>
+  <div class="nav-bottom">
+    <ul class="nav-links">
+      <li><a href="private-dinners.html">Private Dinners</a></li>
+      <li><a href="seasonal-events.html">Seasonal Events</a></li>
+      <li><a href="menus.html" class="active">Menus</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+    <div class="nav-divider"></div>
+    <a href="private-dinners.html#inquiry" class="nav-cta">Book a Dinner</a>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="page-header-tag">The Menus</div>
+  <h1>Every table<br><em>tells a story.</em></h1>
+  <p>A selection of menus from our private dinners — each one written for a specific evening, a specific table, and the people around it.</p>
+</div>
+
+<div class="section-label">
+  <div class="section-label-line"></div>
+  <h3>Private Dinner Menus</h3>
+  <div class="section-label-line"></div>
+</div>
+
+<div class="gallery">
+  <div class="menu-card-wrap">
+    <svg viewBox="0 0 360 580" xmlns="http://www.w3.org/2000/svg">
+      <rect width="360" height="580" fill="#2E4636"/>
+      <rect x="20" y="20" width="320" height="540" fill="none" stroke="#B56B3A" stroke-width="0.75"/>
+      <g transform="translate(180,78)">
+        <polygon points="0,-20 3,-5 0,-9 -3,-5" fill="#EFE8D8"/><polygon points="0,20 3,5 0,9 -3,5" fill="#EFE8D8"/><polygon points="-20,0 -5,3 -9,0 -5,-3" fill="#EFE8D8"/><polygon points="20,0 5,3 9,0 5,-3" fill="#EFE8D8"/>
+        <polygon points="-13,-13 -3,-4 -6,-6 -4,-3" fill="#8A8778" opacity="0.55"/><polygon points="13,-13 3,-4 6,-6 4,-3" fill="#8A8778" opacity="0.55"/><polygon points="-13,13 -3,4 -6,6 -4,3" fill="#8A8778" opacity="0.55"/><polygon points="13,13 3,4 6,6 4,3" fill="#8A8778" opacity="0.55"/>
+        <circle cx="0" cy="0" r="5" fill="#2E4636"/><circle cx="0" cy="0" r="3" fill="#B56B3A"/>
+        <text font-family="Georgia,serif" font-weight="700" font-size="7px" fill="#EFE8D8" x="0" y="-25" text-anchor="middle">N</text>
+        <text font-family="Georgia,serif" font-weight="700" font-size="7px" fill="#EFE8D8" x="0" y="32" text-anchor="middle">H</text>
+      </g>
+      <line x1="56" y1="116" x2="152" y2="116" stroke="#B56B3A" stroke-width="0.75"/><circle cx="180" cy="116" r="3" fill="#B56B3A"/><line x1="208" y1="116" x2="304" y2="116" stroke="#B56B3A" stroke-width="0.75"/>
+      <text font-family="Georgia,serif" font-weight="800" font-size="18px" letter-spacing="4" fill="#EFE8D8" x="180" y="150" text-anchor="middle">NORTH HOUSE</text>
+      <text font-family="Georgia,serif" font-style="italic" font-size="10px" fill="#B56B3A" x="180" y="168" text-anchor="middle">Private Dining · Montréal</text>
+      <line x1="56" y1="184" x2="152" y2="184" stroke="#B56B3A" stroke-width="0.3"/><circle cx="180" cy="184" r="3" fill="#B56B3A"/><line x1="208" y1="184" x2="304" y2="184" stroke="#B56B3A" stroke-width="0.3"/>
+      <text font-family="Georgia,serif" font-size="9px" letter-spacing="2" fill="rgba(240,235,224,0.4)" x="180" y="208" text-anchor="middle">FIVE COURSE · PRIVATE DINNER</text>
+      <text font-family="Georgia,serif" font-style="italic" font-weight="300" font-size="18px" fill="#EFE8D8" x="180" y="232" text-anchor="middle">An Intimate Evening</text>
+      <text font-family="Georgia,serif" font-size="9px" fill="rgba(240,235,224,0.35)" x="180" y="250" text-anchor="middle">Westmount · October 2025</text>
+      <line x1="56" y1="265" x2="304" y2="265" stroke="rgba(240,235,224,0.12)" stroke-width="0.5"/>
+      <text font-family="Georgia,serif" font-size="7.5px" letter-spacing="1.5" fill="#B56B3A" x="56" y="284" text-anchor="start">AMUSE</text>
+      <text font-family="Georgia,serif" font-size="11px" fill="#EFE8D8" x="56" y="300" text-anchor="start">Champagne Velouté · Caviar Pearls</text>
+      <line x1="56" y1="318" x2="304" y2="318" stroke="rgba(240,235,224,0.08)" stroke-width="0.5"/>
+      <text font-family="Georgia,serif" font-size="7.5px" letter-spacing="1.5" fill="#B56B3A" x="56" y="337" text-anchor="start">FIRST</text>
+      <text font-family="Georgia,serif" font-size="11px" fill="#EFE8D8" x="56" y="353" text-anchor="start">Seared Scallop · Cauliflower Purée</text>
+      <line x1="56" y1="371" x2="304" y2="371" stroke="rgba(240,235,224,0.08)" stroke-width="0.5"/>
+      <text font-family="Georgia,serif" font-size="7.5px" letter-spacing="1.5" fill="#B56B3A" x="56" y="390" text-anchor="start">SECOND</text>
+      <text font-family="Georgia,serif" font-size="11px" fill="#EFE8D8" x="56" y="406" text-anchor="start">Handmade Pappardelle · Wild Boar Ragù</text>
+      <line x1="56" y1="424" x2="304" y2="424" stroke="rgba(240,235,224,0.08)" stroke-width="0.5"/>
+      <text font-family="Georgia,serif" font-size="7.5px" letter-spacing="1.5" fill="#B56B3A" x="56" y="443" text-anchor="start">THIRD</text>
+      <text font-family="Georgia,serif" font-size="11px" fill="#EFE8D8" x="56" y="459" text-anchor="start">Beef Tenderloin · Bone Marrow Jus</text>
+      <line x1="56" y1="477" x2="304" y2="477" stroke="rgba(240,235,224,0.08)" stroke-width="0.5"/>
+      <text font-family="Georgia,serif" font-size="7.5px" letter-spacing="1.5" fill="#B56B3A" x="56" y="496" text-anchor="start">DESSERT</text>
+      <text font-family="Georgia,serif" font-size="11px" fill="#EFE8D8" x="56" y="512" text-anchor="start">Chocolate Fondant · Salted Caramel</text>
+    </svg>
+    <div class="menu-card-label">Five Course · Private Dinner</div>
+    <div class="menu-card-sublabel">Westmount · October 2025</div>
+  </div>
+  <div class="menu-card-wrap">
+    <svg viewBox="0 0 360 580" xmlns="http://www.w3.org/2000/svg">
+      <rect width="360" height="580" fill="#EFE8D8"/>
+      <line x1="20" y1="20" x2="52" y2="20" stroke="#2E4636" stroke-width="1.5"/><line x1="20" y1="20" x2="20" y2="52" stroke="#2E4636" stroke-width="1.5"/>
+      <line x1="340" y1="20" x2="308" y2="20" stroke="#2E4636" stroke-width="1.5"/><line x1="340" y1="20" x2="340" y2="52" stroke="#2E4636" stroke-width="1.5"/>
+      <line x1="20" y1="560" x2="52" y2="560" stroke="#2E4636" stroke-width="1.5"/><line x1="20" y1="560" x2="20" y2="528" stroke="#2E4636" stroke-width="1.5"/>
+      <line x1="340" y1="560" x2="308" y2="560" stroke="#2E4636" stroke-width="1.5"/><line x1="340" y1="560" x2="340" y2="528" stroke="#2E4636" stroke-width="1.5"/>
+      <g transform="translate(180,78)">
+        <polygon points="0,-20 3,-5 0,-9 -3,-5" fill="#2E4636"/><polygon points="0,20 3,5 0,9 -3,5" fill="#2E4636"/><polygon points="-20,0 -5,3 -9,0 -5,-3" fill="#2E4636"/><polygon points="20,0 5,3 9,0 5,-3" fill="#2E4636"/>
+        <polygon points="-13,-13 -3,-4 -6,-6 -4,-3" fill="#8A8778" opacity="0.55"/><polygon points="13,-13 3,-4 6,-6 4,-3" fill="#8A8778" opacity="0.55"/><polygon points="-13,13 -3,4 -6,6 -4,3" fill="#8A8778" opacity="0.55"/><polygon points="13,13 3,4 6,6 4,3" fill="#8A8778" opacity="0.55"/>
+        <circle cx="0" cy="0" r="5" fill="#EFE8D8"/><circle cx="0" cy="0" r="3" fill="#B56B3A"/>
+        <text font-family="Georgia,serif" font-weight="700" font-size="7px" fill="#2E4636" x="0" y="-25" text-anchor="middle">N</text>
+        <text font-family="Georgia,serif" font-weight="700" font-size="7px" fill="#2E4636" x="0" y="32" text-anchor="middle">H</text>
+      </g>
+      <line x1="56" y1="116" x2="152" y2="116" stroke="#B56B3A" stroke-width="0.75"/><circle cx="180" cy="116" r="3" fill="#B56B3A"/><line x1="208" y1="116" x2="304" y2="116" stroke="#B56B3A" stroke-width="0.75"/>
+      <text font-family="Georgia,serif" font-weight="800" font-size="18px" letter-spacing="4" fill="#22211F" x="180" y="150" text-anchor="middle">NORTH HOUSE</text>
+      <text font-family="Georgia,serif" font-style="italic" font-size="10px" fill="#B56B3A" x="180" y="168" text-anchor="middle">Private Dining · Montréal</text>
+      <line x1="56" y1="184" x2="152" y2="184" stroke="#B56B3A" stroke-width="0.3"/><circle cx="180" cy="184" r="3" fill="#B56B3A"/><line x1="208" y1="184" x2="304" y2="184" stroke="#B56B3A" stroke-width="0.3"/>
+      <text font-family="Georgia,serif" font-size="9px" letter-spacing="2" fill="rgba(34,33,31,0.35)" x="180" y="208" text-anchor="middle">SEVEN COURSE · PRIVATE DINNER</text>
+      <text font-family="Georgia,serif" font-style="italic" font-weight="300" font-size="18px" fill="#22211F" x="180" y="232" text-anchor="middle">The Anniversary Table</text>
+      <text font-family="Georgia,serif" font-size="9px" fill="rgba(34,33,31,0.35)" x="180" y="250" text-anchor="middle">Outremont · February 2026</text>
+      <line x1="56" y1="265" x2="304" y2="265" stroke="rgba(34,33,31,0.1)" stroke-width="0.5"/>
+      <text font-family="Georgia,serif" font-size="7.5px" letter-spacing="1.5" fill="#B56B3A" x="56" y="284" text-anchor="start">AMUSE</text>
+      <text font-family="Georgia,serif" font-size="10.5px" fill="#22211F" x="56" y="300" text-anchor="start">Oyster · Cucumber Granita · Mignonette</text>
+      <line x1="56" y1="316" x2="304" y2="316" stroke="rgba(34,33,31,0.08)" stroke-width="0.5"/>
+      <text font-family="Georgia,serif" font-size="7.5px" letter-spacing="1.5" fill="#B56B3A" x="56" y="335" text-anchor="start">FIRST</text>
+      <text font-family="Georgia,serif" font-size="10.5px" fill="#22211F" x="56" y="351" text-anchor="start">Foie Gras Torchon · Brioche · Fig Jam</text>
+      <line x1="56" y1="367" x2="304" y2="367" stroke="rgba(34,33,31,0.08)" stroke-width="0.5"/>
+      <text font-family="Georgia,serif" font-size="7.5px" letter-spacing="1.5" fill="#B56B3A" x="56" y="386" text-anchor="start">SECOND</text>
+      <text font-family="Georgia,serif" font-size="10.5px" fill="#22211F" x="56" y="402" text-anchor="start">Lobster Bisque · Tarragon · Cognac</text>
+      <line x1="56" y1="418" x2="304" y2="418" stroke="rgba(34,33,31,0.08)" stroke-width="0.5"/>
+      <text font-family="Georgia,serif" font-size="7.5px" letter-spacing="1.5" fill="#B56B3A" x="56" y="437" text-anchor="start">THIRD</text>
+      <text font-family="Georgia,serif" font-size="10.5px" fill="#22211F" x="56" y="453" text-anchor="start">Québec Arctic Char · Champagne Beurre Blanc</text>
+      <line x1="56" y1="469" x2="304" y2="469" stroke="rgba(34,33,31,0.08)" stroke-width="0.5"/>
+      <text font-family="Georgia,serif" font-size="7.5px" letter-spacing="1.5" fill="#B56B3A" x="56" y="488" text-anchor="start">FOURTH</text>
+      <text font-family="Georgia,serif" font-size="10.5px" fill="#22211F" x="56" y="504" text-anchor="start">Black Truffle Risotto · Aged Parmigiano</text>
+      <line x1="56" y1="520" x2="304" y2="520" stroke="rgba(34,33,31,0.08)" stroke-width="0.5"/>
+      <text font-family="Georgia,serif" font-size="7.5px" letter-spacing="1.5" fill="#B56B3A" x="56" y="539" text-anchor="start">DESSERT</text>
+      <text font-family="Georgia,serif" font-size="10.5px" fill="#22211F" x="56" y="555" text-anchor="start">Tarte au Citron · Raspberry · Chantilly</text>
+    </svg>
+    <div class="menu-card-label">Seven Course · Private Dinner</div>
+    <div class="menu-card-sublabel">Outremont · February 2026</div>
+  </div>
+  <div class="menu-card-wrap">
+    <svg viewBox="0 0 360 580" xmlns="http://www.w3.org/2000/svg">
+      <rect width="360" height="580" fill="#22211F"/>
+      <rect x="20" y="20" width="320" height="540" fill="none" stroke="#B56B3A" stroke-width="1"/>
+      <line x1="20" y1="36" x2="340" y2="36" stroke="#B56B3A" stroke-width="0.3"/>
+      <line x1="56" y1="20" x2="56" y2="36" stroke="#B56B3A" stroke-width="0.75"/><line x1="100" y1="20" x2="100" y2="36" stroke="#B56B3A" stroke-width="0.75"/><line x1="144" y1="20" x2="144" y2="36" stroke="#B56B3A" stroke-width="0.75"/><line x1="180" y1="20" x2="180" y2="36" stroke="#B56B3A" stroke-width="1.5"/><line x1="216" y1="20" x2="216" y2="36" stroke="#B56B3A" stroke-width="0.75"/><line x1="260" y1="20" x2="260" y2="36" stroke="#B56B3A" stroke-width="0.75"/><line x1="304" y1="20" x2="304" y2="36" stroke="#B56B3A" stroke-width="0.75"/>
+      <line x1="20" y1="544" x2="340" y2="544" stroke="#B56B3A" stroke-width="0.3"/>
+      <line x1="56" y1="560" x2="56" y2="544" stroke="#B56B3A" stroke-width="0.75"/><line x1="100" y1="560" x2="100" y2="544" stroke="#B56B3A" stroke-width="0.75"/><line x1="144" y1="560" x2="144" y2="544" stroke="#B56B3A" stroke-width="0.75"/><line x1="180" y1="560" x2="180" y2="544" stroke="#B56B3A" stroke-width="1.5"/><line x1="216" y1="560" x2="216" y2="544" stroke="#B56B3A" stroke-width="0.75"/><line x1="260" y1="560" x2="260" y2="544" stroke="#B56B3A" stroke-width="0.75"/><line x1="304" y1="560" x2="304" y2="544" stroke="#B56B3A" stroke-width="0.75"/>
+      <g transform="translate(180,82)">
+        <polygon points="0,-20 3,-5 0,-9 -3,-5" fill="#EFE8D8"/><polygon points="0,20 3,5 0,9 -3,5" fill="#EFE8D8"/><polygon points="-20,0 -5,3 -9,0 -5,-3" fill="#EFE8D8"/><polygon points="20,0 5,3 9,0 5,-3" fill="#EFE8D8"/>
+        <polygon points="-13,-13 -3,-4 -6,-6 -4,-3" fill="#8A8778" opacity="0.5"/><polygon points="13,-13 3,-4 6,-6 4,-3" fill="#8A8778" opacity="0.5"/><polygon points="-13,13 -3,4 -6,6 -4,3" fill="#8A8778" opacity="0.5"/><polygon points="13,13 3,4 6,6 4,3" fill="#8A8778" opacity="0.5"/>
+        <circle cx="0" cy="0" r="5" fill="#22211F"/><circle cx="0" cy="0" r="3" fill="#B56B3A"/>
+        <text font-family="Georgia,serif" font-weight="700" font-size="7px" fill="#EFE8D8" x="0" y="-25" text-anchor="middle">N</text>
+        <text font-family="Georgia,serif" font-weight="700" font-size="7px" fill="#EFE8D8" x="0" y="32" text-anchor="middle">H</text>
+      </g>
+      <line x1="56" y1="120" x2="152" y2="120" stroke="#B56B3A" stroke-width="0.75"/><circle cx="180" cy="120" r="3" fill="#B56B3A"/><line x1="208" y1="120" x2="304" y2="120" stroke="#B56B3A" stroke-width="0.75"/>
+      <text font-family="Georgia,serif" font-weight="800" font-size="18px" letter-spacing="4" fill="#EFE8D8" x="180" y="154" text-anchor="middle">NORTH HOUSE</text>
+      <text font-family="Georgia,serif" font-style="italic" font-size="10px" fill="#B56B3A" x="180" y="172" text-anchor="middle">Private Dining · Montréal</text>
+      <line x1="56" y1="188" x2="152" y2="188" stroke="#B56B3A" stroke-width="0.3"/><circle cx="180" cy="188" r="3" fill="#B56B3A"/><line x1="208" y1="188" x2="304" y2="188" stroke="#B56B3A" stroke-width="0.3"/>
+      <text font-family="Georgia,serif" font-size="9px" letter-spacing="2" fill="rgba(240,235,224,0.35)" x="180" y="212" text-anchor="middle">SIX COURSE · PRIVATE DINNER</text>
+      <text font-family="Georgia,serif" font-style="italic" font-weight="300" font-size="18px" fill="#EFE8D8" x="180" y="236" text-anchor="middle">The Celebration Table</text>
+      <text font-family="Georgia,serif" font-size="9px" fill="rgba(240,235,224,0.3)" x="180" y="254" text-anchor="middle">Mile End · April 2026</text>
+      <line x1="56" y1="269" x2="304" y2="269" stroke="rgba(240,235,224,0.08)" stroke-width="0.5"/>
+      <text font-family="Georgia,serif" font-size="7.5px" letter-spacing="1.5" fill="#B56B3A" x="56" y="288" text-anchor="start">AMUSE</text>
+      <text font-family="Georgia,serif" font-size="10.5px" fill="#EFE8D8" x="56" y="304" text-anchor="start">Smoked Salmon Blini · Dill Crème Fraîche</text>
+      <line x1="56" y1="320" x2="304" y2="320" stroke="rgba(240,235,224,0.06)" stroke-width="0.5"/>
+      <text font-family="Georgia,serif" font-size="7.5px" letter-spacing="1.5" fill="#B56B3A" x="56" y="339" text-anchor="start">FIRST</text>
+      <text font-family="Georgia,serif" font-size="10.5px" fill="#EFE8D8" x="56" y="355" text-anchor="start">Burrata · Roasted Stone Fruit · Basil</text>
+      <line x1="56" y1="371" x2="304" y2="371" stroke="rgba(240,235,224,0.06)" stroke-width="0.5"/>
+      <text font-family="Georgia,serif" font-size="7.5px" letter-spacing="1.5" fill="#B56B3A" x="56" y="390" text-anchor="start">SECOND</text>
+      <text font-family="Georgia,serif" font-size="10.5px" fill="#EFE8D8" x="56" y="406" text-anchor="start">Pan-Seared Halibut · Saffron Beurre Blanc</text>
+      <line x1="56" y1="422" x2="304" y2="422" stroke="rgba(240,235,224,0.06)" stroke-width="0.5"/>
+      <text font-family="Georgia,serif" font-size="7.5px" letter-spacing="1.5" fill="#B56B3A" x="56" y="441" text-anchor="start">THIRD</text>
+      <text font-family="Georgia,serif" font-size="10.5px" fill="#EFE8D8" x="56" y="457" text-anchor="start">Rack of Lamb · Herb Crust · Dijon Jus</text>
+      <line x1="56" y1="473" x2="304" y2="473" stroke="rgba(240,235,224,0.06)" stroke-width="0.5"/>
+      <text font-family="Georgia,serif" font-size="7.5px" letter-spacing="1.5" fill="#B56B3A" x="56" y="492" text-anchor="start">CHEESE</text>
+      <text font-family="Georgia,serif" font-size="10.5px" fill="#EFE8D8" x="56" y="508" text-anchor="start">Québec Cheese Selection · Honey · Walnuts</text>
+      <line x1="56" y1="524" x2="304" y2="524" stroke="rgba(240,235,224,0.06)" stroke-width="0.5"/>
+      <text font-family="Georgia,serif" font-size="7.5px" letter-spacing="1.5" fill="#B56B3A" x="56" y="543" text-anchor="start">DESSERT</text>
+      <text font-family="Georgia,serif" font-size="10.5px" fill="#EFE8D8" x="56" y="559" text-anchor="start">Paris-Brest · Praline Cream · Hazelnuts</text>
+    </svg>
+    <div class="menu-card-label">Six Course · Private Dinner</div>
+    <div class="menu-card-sublabel">Mile End · April 2026</div>
+  </div>
+</div>
+
+<!-- PHOTO STRIP -->
+<div class="photo-strip">
+  <div><img src="img_oyster_pro.jpg" alt="Oyster"/></div>
+  <div><img src="img_salmon.jpg" alt="Cured salmon"/></div>
+  <div><img src="img_lobster_plate.jpg" alt="Lobster with morels"/></div>
+  <div><img src="img_chicken_plate.jpg" alt="Plated course"/></div>
+</div>
+
+<div class="seasonal-section">
+  <div class="seasonal-header">
+    <div class="seasonal-header-tag">Seasonal Tasting Menus</div>
+    <h2>Written for<br><em>the long table.</em></h2>
+  </div>
+  <div class="season-tabs">
+    <button class="season-tab active" onclick="showMenu('summer',this)">Summer 2026</button>
+    <button class="season-tab" onclick="showMenu('autumn',this)">Autumn 2026</button>
+    <button class="season-tab" onclick="showMenu('winter',this)">Winter 2027</button>
+  </div>
+  <div class="menu-body active" id="menu-summer">
+    <div class="menu-header">
+      <div class="menu-header-left">
+        <div class="menu-season-tag">Summer 2026</div>
+        <h2>The Long Light<br><em>Tasting Menu</em></h2>
+        <p>A five-course menu that follows the Québec summer from its first heat to its last long evening.</p>
+      </div>
+      <div class="menu-header-right">
+        <div class="menu-meta"><div class="menu-meta-label">Format</div><div class="menu-meta-value">Five courses · Shared table</div></div>
+        <div class="menu-meta"><div class="menu-meta-label">Duration</div><div class="menu-meta-value">Approximately 3 hours</div></div>
+        <div class="menu-meta"><div class="menu-meta-label">Service</div><div class="menu-meta-value">Full table service · Paired wines available</div></div>
+        <div class="menu-note">Menus change with the season and the market. What arrives at the table may differ slightly — always for the better.</div>
+      </div>
+    </div>
+    <div class="courses">
+      <div class="course"><div class="course-num"><div class="course-label">Amuse</div><div class="course-count">00</div></div><div class="course-content"><div class="course-name">Gougères & Smoked Trout Rillettes</div><div class="course-sub">Chive crème fraîche · Preserved lemon</div><div class="course-desc">Something small and warm to begin. A bite that tells you what kind of evening this is going to be.</div></div></div>
+      <div class="course"><div class="course-num"><div class="course-label">First</div><div class="course-count">01</div></div><div class="course-content"><div class="course-name">Heirloom Tomato & Burrata</div><div class="course-sub">Basil oil · Fleur de sel · Aged balsamic</div><div class="course-desc">Québec heirloom tomatoes at the height of summer. Nothing else is needed. Nothing else is added.</div></div></div>
+      <div class="course"><div class="course-num"><div class="course-label">Second</div><div class="course-count">02</div></div><div class="course-content"><div class="course-name">St. Lawrence Scallop Crudo</div><div class="course-sub">Cucumber water · Green apple · Dill · Finger lime</div><div class="course-desc">Raw, cold, and clean. The scallop needs very little — just cold and acid and something green.</div></div></div>
+      <div class="course"><div class="course-num"><div class="course-label">Third</div><div class="course-count">03</div></div><div class="course-content"><div class="course-name">Québec Arctic Char</div><div class="course-sub">Beurre blanc · Summer pea purée · Charred leek · Capers</div><div class="course-desc">Pan-roasted skin-side down until the skin does what great fish skin does.</div></div></div>
+      <div class="course"><div class="course-num"><div class="course-label">Fourth</div><div class="course-count">04</div></div><div class="course-content"><div class="course-name">Slow-Roasted Lamb Shoulder</div><div class="course-sub">Rosemary jus · White bean purée · Grilled courgette · Salsa verde</div><div class="course-desc">Eight hours in a low oven. Pulled at the table.</div></div></div>
+      <div class="course"><div class="course-num"><div class="course-label">Dessert</div><div class="course-count">05</div></div><div class="course-content"><div class="course-name">Strawberry & Cream</div><div class="course-sub">Île d'Orléans strawberries · Chantilly · Shortbread · Elderflower</div><div class="course-desc">The best strawberries in Québec come from Île d'Orléans. We use them simply, because they deserve it.</div></div></div>
+    </div>
+  </div>
+  <div class="menu-body" id="menu-autumn">
+    <div class="menu-header">
+      <div class="menu-header-left"><div class="menu-season-tag">Autumn 2026</div><h2>The Root Cellar<br><em>Tasting Menu</em></h2><p>As the light fades, a menu built for warmth. Root vegetables, game, fungi, and richness that feels earned by the season.</p></div>
+      <div class="menu-header-right"><div class="menu-meta"><div class="menu-meta-label">Format</div><div class="menu-meta-value">Six courses · Shared table</div></div><div class="menu-meta"><div class="menu-meta-label">Duration</div><div class="menu-meta-value">Approximately 3.5 hours</div></div><div class="menu-note">Coming September 2026. Menu details revealed closer to the date.</div></div>
+    </div>
+    <div class="courses"><div class="course"><div class="course-num"><div class="course-label">Preview</div><div class="course-count">—</div></div><div class="course-content"><div class="course-name">Menu in development</div><div class="course-sub">Revealed to ticket holders two weeks before the dinner</div><div class="course-desc">Join the list to be notified when tickets drop.</div></div></div></div>
+  </div>
+  <div class="menu-body" id="menu-winter">
+    <div class="menu-header">
+      <div class="menu-header-left"><div class="menu-season-tag">Winter 2027</div><h2>The Dark Table<br><em>Tasting Menu</em></h2><p>Our most ambitious menu of the year. Long nights, deep flavours, and a table that stays lit until there's nothing left to say.</p></div>
+      <div class="menu-header-right"><div class="menu-meta"><div class="menu-meta-label">Format</div><div class="menu-meta-value">Seven courses · Shared table</div></div><div class="menu-meta"><div class="menu-meta-label">Duration</div><div class="menu-meta-value">Approximately 4 hours</div></div><div class="menu-note">Coming January 2027. Join the list for first access to tickets.</div></div>
+    </div>
+    <div class="courses"><div class="course"><div class="course-num"><div class="course-label">Preview</div><div class="course-count">—</div></div><div class="course-content"><div class="course-name">Menu in development</div><div class="course-sub">Revealed to ticket holders two weeks before the dinner</div><div class="course-desc">Winter demands patience. So does this menu. We're writing it slowly, carefully, and with a great deal of butter.</div></div></div></div>
+  </div>
+</div>
+
+<div class="dietary">
+  <div class="dietary-text"><div class="dietary-label">Dietary Requirements</div><p>All dietary restrictions and allergies are accommodated when noted at the time of booking. Please let us know what you need — we will never make you feel like an inconvenience for asking.</p></div>
+  <a href="private-dinners.html#inquiry" class="dietary-btn">Book a Private Dinner</a>
+</div>
+
+<footer>
+  <div class="footer-left">Montréal · Est. 2025</div>
+  <div class="footer-centre"><div class="footer-name">NORTH HOUSE</div><div class="footer-sub">Private Dining · Montréal</div></div>
+  <div class="footer-right">© 2025 North House Inc.</div>
+</footer>
+<script>
+  function showMenu(season, btn) {
+    document.querySelectorAll('.menu-body').forEach(m => m.classList.remove('active'));
+    document.querySelectorAll('.season-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('menu-' + season).classList.add('active');
+    btn.classList.add('active');
+  }
+</script>
+</body>
+</html>
