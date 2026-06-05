@@ -94,6 +94,8 @@
   .notify-form input::placeholder { color:var(--stone); }
   .notify-form button { font-family:'Spectral',Georgia,serif; font-size:10px; font-weight:700; letter-spacing:0.3em; text-transform:uppercase; padding:14px 24px; background:var(--alpine); color:#F0EBE0; border:1px solid var(--alpine); cursor:pointer; transition:background 0.2s; }
   .notify-form button:hover { background:var(--charcoal); border-color:var(--charcoal); }
+  .notify-form button:disabled { opacity:0.5; cursor:default; }
+  .notify-success { display:none; font-family:'Spectral',Georgia,serif; font-size:13px; font-style:italic; color:var(--alpine); letter-spacing:0.05em; margin-top:4px; }
   footer { padding:48px; display:flex; align-items:center; justify-content:center; gap:80px; background:var(--charcoal); }
   .footer-left { font-family:'Spectral',Georgia,serif; font-size:10px; font-weight:700; letter-spacing:0.3em; color:rgba(240,235,224,0.35); text-transform:uppercase; }
   .footer-centre { display:flex; flex-direction:column; align-items:center; gap:6px; }
@@ -237,10 +239,12 @@
   <div class="notify-tag">Never Miss a Table</div>
   <h2>New dinners sell out<br><em>before we announce them.</em></h2>
   <p>Join the list and get first access to every new event before it goes public.</p>
-  <div class="notify-form">
-    <input type="email" placeholder="your@email.com"/>
-    <button type="submit">Get Early Access</button>
-  </div>
+  <form class="notify-form" id="notifyForm" action="https://formspree.io/f/xreveebv" method="POST">
+    <input type="hidden" name="_subject" value="Event List Signup — North House"/>
+    <input type="email" name="email" placeholder="your@email.com" required/>
+    <button type="submit" id="notifyBtn">Get Early Access</button>
+  </form>
+  <p class="notify-success" id="notifySuccess">You're on the list. We'll be in touch.</p>
 </section>
 
 <footer>
@@ -254,6 +258,28 @@
 <script>
   document.getElementById('navToggle').addEventListener('click', function() {
     document.querySelector('.nav-bottom').classList.toggle('open');
+  });
+  document.getElementById('notifyForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const btn = document.getElementById('notifyBtn');
+    btn.textContent = 'Joining…';
+    btn.disabled = true;
+    try {
+      const res = await fetch(this.action, {
+        method: 'POST',
+        body: new FormData(this),
+        headers: { 'Accept': 'application/json' }
+      });
+      if (res.ok) {
+        this.style.display = 'none';
+        document.getElementById('notifySuccess').style.display = 'block';
+      } else {
+        throw new Error();
+      }
+    } catch(err) {
+      btn.textContent = 'Get Early Access';
+      btn.disabled = false;
+    }
   });
 </script>
 </body>
