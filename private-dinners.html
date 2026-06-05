@@ -102,6 +102,32 @@
   .page-hero-content > *:nth-child(1){animation-delay:0.1s;}
   .page-hero-content > *:nth-child(2){animation-delay:0.25s;}
   .page-hero-content > *:nth-child(3){animation-delay:0.4s;}
+  .nav-toggle { display:none; flex-direction:column; gap:5px; background:none; border:none; cursor:pointer; padding:4px; }
+  .nav-toggle span { display:block; width:22px; height:1.5px; background:var(--charcoal); }
+  @media (max-width:768px) {
+    nav { flex-direction:row; justify-content:space-between; align-items:center; padding:14px 24px; gap:0; }
+    .nav-toggle { display:flex; }
+    .nav-bottom { display:none; position:absolute; top:100%; left:0; right:0; background:rgba(240,235,224,0.97); backdrop-filter:blur(8px); border-bottom:0.5px solid rgba(34,33,31,0.1); flex-direction:column; align-items:center; padding:24px 24px 28px; gap:20px; }
+    .nav-bottom.open { display:flex; }
+    .nav-links { flex-direction:column; align-items:center; gap:20px; }
+    .nav-divider { display:none; }
+    .page-hero { height:56vh; }
+    .intro { padding:64px 32px; gap:40px; }
+    .included { padding:64px 32px; }
+    .inquiry { padding:64px 32px; }
+    .form-row { grid-template-columns:1fr; gap:16px; }
+    footer { gap:40px; padding:40px 24px; }
+  }
+  @media (max-width:480px) {
+    .page-hero { height:50vh; }
+    .intro { grid-template-columns:1fr; gap:32px; padding:48px 24px; }
+    .food-strip { grid-template-columns:1fr 1fr; }
+    .included { padding:48px 24px; }
+    .included-grid { grid-template-columns:1fr; gap:36px; }
+    .full-photo { height:40vh; }
+    .inquiry { padding:48px 24px; }
+    footer { flex-direction:column; align-items:center; gap:14px; text-align:center; }
+  }
 </style>
 </head>
 <body>
@@ -128,6 +154,7 @@
     </svg>
     <div class="nav-wordmark">North House</div>
   </a>
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
   <div class="nav-bottom">
     <ul class="nav-links">
       <li><a href="private-dinners.html" class="active">Private Dinners</a></li>
@@ -255,5 +282,10 @@
   <div class="footer-right">© 2025 North House Inc.</div>
 </footer>
 
+<script>
+  document.getElementById('navToggle').addEventListener('click', function() {
+    document.querySelector('.nav-bottom').classList.toggle('open');
+  });
+</script>
 </body>
 </html>

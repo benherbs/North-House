@@ -116,6 +116,38 @@
   .hero-panel.right .hero-content > *:nth-child(2){animation-delay:0.55s;}
   .hero-panel.right .hero-content > *:nth-child(3){animation-delay:0.7s;}
   .hero-panel.right .hero-content > *:nth-child(4){animation-delay:0.85s;}
+  .nav-toggle { display:none; flex-direction:column; gap:5px; background:none; border:none; cursor:pointer; padding:4px; }
+  .nav-toggle span { display:block; width:22px; height:1.5px; background:#F0EBE0; transition:background 0.4s; }
+  nav.scrolled .nav-toggle span { background:var(--charcoal); }
+  @media (max-width:768px) {
+    nav { flex-direction:row; justify-content:space-between; align-items:center; padding:14px 24px; gap:0; }
+    .nav-toggle { display:flex; }
+    .nav-bottom { display:none; position:absolute; top:100%; left:0; right:0; background:rgba(240,235,224,0.97); backdrop-filter:blur(8px); border-bottom:0.5px solid rgba(34,33,31,0.1); flex-direction:column; align-items:center; padding:24px 24px 28px; gap:20px; }
+    .nav-bottom.open { display:flex; }
+    .nav-links { flex-direction:column; align-items:center; gap:20px; }
+    .nav-links a { color:var(--charcoal); }
+    .nav-divider { display:none; }
+    .statement { padding:80px 32px; }
+    .photo-strip { grid-template-columns:1fr 1fr; }
+    .how { padding:64px 32px 80px; }
+    .capture { padding:72px 32px; }
+    footer { gap:40px; padding:40px 24px; }
+  }
+  @media (max-width:480px) {
+    .hero { grid-template-columns:1fr; }
+    .hero-panel { min-height:58vh; }
+    .hero-divider { display:none; }
+    .hero-content { padding:32px 24px; }
+    .statement { grid-template-columns:1fr; gap:24px; padding:56px 24px; }
+    .statement-mark { display:none; }
+    .how { padding:48px 24px 64px; }
+    .how-grid { grid-template-columns:1fr; gap:32px; }
+    .full-photo { height:45vh; }
+    .capture { padding:48px 24px; }
+    .capture-form { flex-direction:column; }
+    .capture-form input { border-right:1px solid rgba(34,33,31,0.2); border-bottom:none; }
+    footer { flex-direction:column; align-items:center; gap:14px; text-align:center; }
+  }
 </style>
 </head>
 <body>
@@ -142,6 +174,7 @@
     </svg>
     <div class="nav-wordmark">North House</div>
   </a>
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
   <div class="nav-bottom">
     <ul class="nav-links">
       <li><a href="private-dinners.html">Private Dinners</a></li>
@@ -256,6 +289,9 @@
   const nav = document.getElementById('nav');
   window.addEventListener('scroll', () => {
     nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
+  document.getElementById('navToggle').addEventListener('click', function() {
+    document.querySelector('.nav-bottom').classList.toggle('open');
   });
 </script>
 </body>
