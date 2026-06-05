@@ -88,6 +88,12 @@
   .form-submit { font-family:'Spectral',Georgia,serif; font-size:10px; font-weight:700; letter-spacing:0.3em; text-transform:uppercase; color:var(--oat); background:var(--ember); border:none; padding:16px 40px; cursor:pointer; transition:background 0.2s; align-self:center; margin-top:8px; }
   .form-submit:hover { background:var(--alpine); }
   .form-note { font-family:'Spectral',Georgia,serif; font-size:10px; font-style:italic; color:rgba(240,235,224,0.3); text-align:center; letter-spacing:0.05em; }
+  .form-submit:disabled { opacity:0.5; cursor:default; }
+  .form-success { display:none; text-align:center; padding:48px 0 16px; }
+  .form-success-dot { width:8px; height:8px; border-radius:50%; background:var(--ember); margin:0 auto 28px; }
+  .form-success-heading { font-family:'Spectral',Georgia,serif; font-weight:300; font-size:clamp(26px,3vw,40px); color:#F0EBE0; margin-bottom:14px; }
+  .form-success-body { font-family:'Cormorant Garamond',Georgia,serif; font-size:18px; color:rgba(240,235,224,0.55); line-height:1.7; }
+  .form-error { font-family:'Spectral',Georgia,serif; font-size:10px; color:var(--ember); text-align:center; letter-spacing:0.05em; margin-top:12px; }
 
   /* FOOTER */
   footer { padding:48px; display:flex; align-items:center; justify-content:center; gap:80px; background:var(--charcoal); border-top:0.5px solid rgba(240,235,224,0.08); }
@@ -240,35 +246,41 @@
     <div class="inquiry-tag">Begin Here</div>
     <h2>Tell us about<br><em>your evening.</em></h2>
     <p class="inquiry-sub">We respond to every enquiry within 24 hours. No commitment required — just a conversation.</p>
-    <div class="form">
+    <form class="form" id="inquiryForm" action="https://formspree.io/f/REPLACE_WITH_YOUR_FORM_ID" method="POST" novalidate>
+      <input type="hidden" name="_subject" value="New Dinner Enquiry — North House"/>
       <div class="form-row">
-        <div class="form-field"><label>First Name</label><input type="text" placeholder="Tyler"/></div>
-        <div class="form-field"><label>Last Name</label><input type="text" placeholder="Stern"/></div>
+        <div class="form-field"><label for="first_name">First Name</label><input id="first_name" type="text" name="first_name" placeholder="Tyler" required/></div>
+        <div class="form-field"><label for="last_name">Last Name</label><input id="last_name" type="text" name="last_name" placeholder="Stern"/></div>
       </div>
       <div class="form-row">
-        <div class="form-field"><label>Email</label><input type="email" placeholder="tyler@northhouse.ca"/></div>
-        <div class="form-field"><label>Phone</label><input type="tel" placeholder="+1 514 000 0000"/></div>
+        <div class="form-field"><label for="email">Email</label><input id="email" type="email" name="email" placeholder="tyler@northhouse.ca" required/></div>
+        <div class="form-field"><label for="phone">Phone</label><input id="phone" type="tel" name="phone" placeholder="+1 514 000 0000"/></div>
       </div>
       <div class="form-row">
         <div class="form-field">
-          <label>Occasion</label>
-          <select><option value="" disabled selected>Select an occasion</option><option>Birthday</option><option>Anniversary</option><option>Corporate Dinner</option><option>Celebration</option><option>No occasion — just dinner</option></select>
+          <label for="occasion">Occasion</label>
+          <select id="occasion" name="occasion"><option value="" disabled selected>Select an occasion</option><option>Birthday</option><option>Anniversary</option><option>Corporate Dinner</option><option>Celebration</option><option>No occasion — just dinner</option></select>
         </div>
         <div class="form-field">
-          <label>Number of Guests</label>
-          <select><option value="" disabled selected>Select group size</option><option>4–6 guests</option><option>7–10 guests</option><option>11–14 guests</option><option>15–18 guests</option><option>18+ guests</option></select>
+          <label for="guests">Number of Guests</label>
+          <select id="guests" name="guests"><option value="" disabled selected>Select group size</option><option>4–6 guests</option><option>7–10 guests</option><option>11–14 guests</option><option>15–18 guests</option><option>18+ guests</option></select>
         </div>
       </div>
       <div class="form-row">
-        <div class="form-field"><label>Preferred Date</label><input type="date"/></div>
-        <div class="form-field"><label>Neighbourhood / Area</label><input type="text" placeholder="Outremont, Westmount…"/></div>
+        <div class="form-field"><label for="preferred_date">Preferred Date</label><input id="preferred_date" type="date" name="preferred_date"/></div>
+        <div class="form-field"><label for="neighbourhood">Neighbourhood / Area</label><input id="neighbourhood" type="text" name="neighbourhood" placeholder="Outremont, Westmount…"/></div>
       </div>
       <div class="form-field">
-        <label>Anything else we should know?</label>
-        <textarea placeholder="Dietary restrictions, allergies, the vibe you're going for, a wine you love…"></textarea>
+        <label for="message">Anything else we should know?</label>
+        <textarea id="message" name="message" placeholder="Dietary restrictions, allergies, the vibe you're going for, a wine you love…"></textarea>
       </div>
-      <button class="form-submit" type="submit">Send Enquiry</button>
+      <button class="form-submit" id="submitBtn" type="submit">Send Enquiry</button>
       <div class="form-note">We will never share your information. This is just the beginning of a conversation.</div>
+    </form>
+    <div class="form-success" id="formSuccess">
+      <div class="form-success-dot"></div>
+      <p class="form-success-heading">Thank you.</p>
+      <p class="form-success-body">We'll be in touch within 24 hours to begin planning your evening.</p>
     </div>
   </div>
 </section>
@@ -285,6 +297,34 @@
 <script>
   document.getElementById('navToggle').addEventListener('click', function() {
     document.querySelector('.nav-bottom').classList.toggle('open');
+  });
+  document.getElementById('inquiryForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const btn = document.getElementById('submitBtn');
+    const errEl = this.querySelector('.form-error');
+    if (errEl) errEl.remove();
+    btn.textContent = 'Sending…';
+    btn.disabled = true;
+    try {
+      const res = await fetch(this.action, {
+        method: 'POST',
+        body: new FormData(this),
+        headers: { 'Accept': 'application/json' }
+      });
+      if (res.ok) {
+        this.style.display = 'none';
+        document.getElementById('formSuccess').style.display = 'block';
+      } else {
+        throw new Error();
+      }
+    } catch(err) {
+      btn.textContent = 'Send Enquiry';
+      btn.disabled = false;
+      const msg = document.createElement('p');
+      msg.className = 'form-error';
+      msg.textContent = 'Something went wrong. Please try again.';
+      btn.insertAdjacentElement('afterend', msg);
+    }
   });
 </script>
 </body>
