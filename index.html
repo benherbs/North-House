@@ -97,6 +97,8 @@
   .capture-form input::placeholder { color:var(--stone); }
   .capture-form button { font-family:'Spectral',Georgia,serif; font-size:10px; font-weight:700; letter-spacing:0.3em; text-transform:uppercase; padding:14px 24px; background:var(--alpine); color:#F0EBE0; border:1px solid var(--alpine); cursor:pointer; transition:background 0.2s; }
   .capture-form button:hover { background:var(--charcoal); border-color:var(--charcoal); }
+  .capture-form button:disabled { opacity:0.5; cursor:default; }
+  .capture-success { display:none; font-family:'Spectral',Georgia,serif; font-size:13px; font-style:italic; color:var(--alpine); letter-spacing:0.05em; margin-top:4px; }
 
   /* FOOTER */
   footer { padding:48px; display:flex; align-items:center; justify-content:center; gap:80px; background:var(--charcoal); }
@@ -270,10 +272,12 @@
   <div class="capture-tag">Stay at the Table</div>
   <h2>Be the first to know<br>when our next dinner drops.</h2>
   <p>Seasonal menus. Ticketed events. Stories from the table.</p>
-  <div class="capture-form">
-    <input type="email" placeholder="your@email.com"/>
-    <button type="submit">Join the List</button>
-  </div>
+  <form class="capture-form" id="captureForm" action="https://formspree.io/f/xreveebv" method="POST">
+    <input type="hidden" name="_subject" value="Email List Signup — North House"/>
+    <input type="email" name="email" placeholder="your@email.com" required/>
+    <button type="submit" id="captureBtn">Join the List</button>
+  </form>
+  <p class="capture-success" id="captureSuccess">You're on the list. We'll be in touch.</p>
 </section>
 
 <footer>
@@ -292,6 +296,28 @@
   });
   document.getElementById('navToggle').addEventListener('click', function() {
     document.querySelector('.nav-bottom').classList.toggle('open');
+  });
+  document.getElementById('captureForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const btn = document.getElementById('captureBtn');
+    btn.textContent = 'Joining…';
+    btn.disabled = true;
+    try {
+      const res = await fetch(this.action, {
+        method: 'POST',
+        body: new FormData(this),
+        headers: { 'Accept': 'application/json' }
+      });
+      if (res.ok) {
+        this.style.display = 'none';
+        document.getElementById('captureSuccess').style.display = 'block';
+      } else {
+        throw new Error();
+      }
+    } catch(err) {
+      btn.textContent = 'Join the List';
+      btn.disabled = false;
+    }
   });
 </script>
 </body>
