@@ -62,6 +62,14 @@
   .event-btn:hover { background:var(--charcoal); }
   .event-btn.sold-out { background:rgba(34,33,31,0.15); color:var(--stone); cursor:default; }
   .event-price { font-family:'Spectral',Georgia,serif; font-size:11px; color:var(--stone); letter-spacing:0.1em; }
+  .events-coming { padding:80px 0; border-top:0.5px solid rgba(34,33,31,0.1); border-bottom:0.5px solid rgba(34,33,31,0.1); display:flex; flex-direction:column; align-items:center; text-align:center; gap:18px; }
+  .events-coming-tag { font-family:'Spectral',Georgia,serif; font-size:10px; font-weight:700; letter-spacing:0.55em; text-transform:uppercase; color:var(--ember); }
+  .events-coming-heading { font-family:'Spectral',Georgia,serif; font-weight:300; font-size:clamp(28px,3.5vw,48px); line-height:1.3; color:var(--charcoal); }
+  .events-coming-heading em { font-style:italic; color:var(--alpine); }
+  .events-coming-body { font-family:'Cormorant Garamond',Georgia,serif; font-size:17px; color:var(--stone); line-height:1.7; max-width:440px; }
+  .events-coming-rule { display:flex; align-items:center; gap:14px; width:100px; margin-top:8px; }
+  .events-coming-rule-line { flex:1; height:0.5px; background:rgba(34,33,31,0.15); }
+  .events-coming-rule-dot { width:5px; height:5px; border-radius:50%; background:var(--ember); flex-shrink:0; }
   /* PHOTO BREAK */
   .photo-break { display:grid; grid-template-columns:1fr 1fr 1fr; gap:3px; height:420px; }
   .photo-break-item { overflow:hidden; }
@@ -190,71 +198,11 @@
     <h3>Upcoming Dinners</h3>
     <div class="events-header-line"></div>
   </div>
-  <div class="event-card">
-    <div class="event-date">
-      <div class="event-month">June</div>
-      <div class="event-day">14</div>
-      <div class="event-year">2026</div>
-    </div>
-    <div class="event-info">
-      <div class="event-label">Summer Opening Table</div>
-      <h4>The Long Light <em>Dinner</em></h4>
-      <div class="event-details">
-        <div class="event-detail"><strong>7:00 PM</strong></div>
-        <div class="event-detail">· Mile End, Montréal</div>
-        <div class="event-detail">· 14 seats</div>
-      </div>
-      <p>A five-course menu celebrating the longest days of the Québec summer. Vegetables at their peak, a whole roasted fish, and a dessert that tastes like the end of something good.</p>
-    </div>
-    <div class="event-action">
-      <div class="event-seats seats-available">● Seats Available</div>
-      <div class="event-price">$145 per seat</div>
-      <a href="#" class="event-btn">Reserve a Seat</a>
-    </div>
-  </div>
-  <div class="event-card">
-    <div class="event-date">
-      <div class="event-month">July</div>
-      <div class="event-day">19</div>
-      <div class="event-year">2026</div>
-    </div>
-    <div class="event-info">
-      <div class="event-label">Midsummer Table</div>
-      <h4>Smoke & Stone <em>Dinner</em></h4>
-      <div class="event-details">
-        <div class="event-detail"><strong>7:30 PM</strong></div>
-        <div class="event-detail">· Outremont, Montréal</div>
-        <div class="event-detail">· 12 seats</div>
-      </div>
-      <p>Fire-cooked from start to finish. A menu built around the grill, the wood, and the patience it takes to cook something properly. Four courses. One open fire.</p>
-    </div>
-    <div class="event-action">
-      <div class="event-seats seats-few">● 3 Seats Remaining</div>
-      <div class="event-price">$165 per seat</div>
-      <a href="#" class="event-btn">Reserve a Seat</a>
-    </div>
-  </div>
-  <div class="event-card">
-    <div class="event-date">
-      <div class="event-month">Aug</div>
-      <div class="event-day">09</div>
-      <div class="event-year">2026</div>
-    </div>
-    <div class="event-info">
-      <div class="event-label">Late Summer Table</div>
-      <h4>The Harvest <em>Dinner</em></h4>
-      <div class="event-details">
-        <div class="event-detail"><strong>6:30 PM</strong></div>
-        <div class="event-detail">· Plateau-Mont-Royal</div>
-        <div class="event-detail">· 16 seats</div>
-      </div>
-      <p>Before autumn arrives, a menu built entirely from what Québec's farms have at their very best. A love letter to the season before it ends.</p>
-    </div>
-    <div class="event-action">
-      <div class="event-seats seats-sold">● Sold Out</div>
-      <div class="event-price">$155 per seat</div>
-      <a class="event-btn sold-out">Join Waitlist</a>
-    </div>
+  <div class="events-coming">
+    <div class="events-coming-tag">Coming Soon</div>
+    <h3 class="events-coming-heading">Ticketed dinners<br><em>arriving this season.</em></h3>
+    <p class="events-coming-body">We're finalising the calendar. Join the list below and you'll be the first to know when seats drop.</p>
+    <div class="events-coming-rule"><div class="events-coming-rule-line"></div><div class="events-coming-rule-dot"></div><div class="events-coming-rule-line"></div></div>
   </div>
 </section>
 
