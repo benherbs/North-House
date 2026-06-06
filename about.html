@@ -71,7 +71,9 @@
   .team-header { display:flex; align-items:center; gap:20px; margin-bottom:64px; }
   .team-header-line { flex:1; height:0.5px; background:rgba(240,235,224,0.15); }
   .team-header h3 { font-family:'Spectral',Georgia,serif; font-size:10px; font-weight:700; letter-spacing:0.55em; text-transform:uppercase; color:rgba(240,235,224,0.4); white-space:nowrap; }
-  .team-founders { display:grid; grid-template-columns:1fr 1fr; gap:48px; max-width:760px; margin:0 auto 64px; }
+  .team-founders { display:grid; grid-template-columns:1fr 260px 1fr; gap:48px; max-width:1000px; margin:0 auto 64px; align-items:center; }
+  .team-founders-photo { aspect-ratio:3/4; overflow:hidden; position:relative; }
+  .team-founders-photo img { width:100%; height:100%; object-fit:cover; object-position:center center; display:block; filter:grayscale(15%); }
   .team-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:48px; }
   .team-member { display:flex; flex-direction:column; }
   .team-photo { aspect-ratio:3/4; overflow:hidden; margin-bottom:24px; position:relative; }
@@ -142,6 +144,7 @@
     .origin-image { order:-1; aspect-ratio:4/3; }
     .team { padding:56px 24px; }
     .team-founders { grid-template-columns:1fr; }
+    .team-founders-photo { aspect-ratio:4/3; max-width:420px; margin:0 auto; width:100%; }
     .team-grid { grid-template-columns:1fr; gap:40px; }
     .expansion { padding:48px 24px; }
     .expansion-cities { grid-template-columns:1fr; }
@@ -235,13 +238,14 @@
   <div class="team-header"><div class="team-header-line"></div><h3>The People Behind the Table</h3><div class="team-header-line"></div></div>
   <div class="team-founders">
     <div class="team-member">
-      <div class="team-photo"><img src="tylers.jpeg" alt="Tyler Stern" style="object-position:center center;"/><div class="team-photo-overlay"></div></div>
       <div class="team-name">Tyler Stern</div>
       <div class="team-role">Co-Founder</div>
       <p class="team-bio">Tyler has spent years hosting dinners for friends across Montréal. North House is the natural extension of that — a belief that great hospitality belongs in homes, not just in restaurants. He oversees every experience from first enquiry to last course.</p>
     </div>
+    <div class="team-founders-photo">
+      <img src="tylers.jpeg" alt="Tyler Stern & Tyler Grill"/>
+    </div>
     <div class="team-member">
-      <div class="team-photo"><img src="tylers.jpeg" alt="Tyler Grill" style="object-position:center center;"/><div class="team-photo-overlay"></div></div>
       <div class="team-name">Tyler Grill</div>
       <div class="team-role">Co-Founder</div>
       <p class="team-bio">Tyler Grill has spent his career around food, people, and the specific alchemy that happens when both are in the same room. He built North House on the conviction that the most meaningful dining is intimate by nature — and that a private table, done right, is something worth building a business around.</p>
